@@ -1,0 +1,71 @@
+Capstone Project
+Turning and tension process big data analysis from high-frequency sensors
+
+Project definition
+Project Overview
+In the last 20 years, the industry has improved predictive maintenance processes and the tools used to perform it. In a fully developed factory, the high frequency sensors are applied to the manufacturing process. In particular, vibration analysis technology has evolved to unimaginable levels. To ensure the turning process through the best digital solution is my job. Turning process is an essential process in the manufacturing. The goal is to monitor the whole process to ensure the product quality by the sensors and sampling. Another goal is to model the tool life. The prediction of tool life can effectively avoid part quality problems caused by abnormal tool status and improve tool utilization rate. In this project, the data from the vibration sensors, quality control database and MES system are collected. The three data sources are combined through the time.
+Project Statement
+The tool wear process is complicated and the residual life of tool is difficult to be predicted accurately by the influence of working conditions. There are two important objectives for the turning process: (1) To model the tool life. (2) To model the roughness of the turning product. It is relying on the feature selection.  For the tension process, we are focused on (1) the relationship between tension and voltage (2) the balance between the left and right tension.
+Metrics
+Both of the two problems are regression problems. We are going to use the R squared as the basic metrics to measure the performance of the model. 
+Analysis
+Data Exploration
+
+For the tension problem, it consists of 11962005 rows and 8 columns. The data records the tension/voltage change from 6/28 0:00 to 6/28 18:00. There are 1853 products in the dataset. There are still some mislabeled products. For better separations of the time-series data, we only use the data corresponding to 6200-6300 rows. This would be 1692 products (~91% of the original dataset).
+ 
+
+
+Data visualization
+ 
+[Fig] The number of records for each product in the tension problem after removing outliers in the tension dataset
+ 
+[Fig] The relationship between tension and voltage across one product in the tension dataset
+Methodology
+Data preprocessing
+For the tension sensor’s dataset, there are more or less rows corresponding to one product. We have to remove the outliers. The sensor for the tension is around 300 HZ. The sensor for the turning is around 2000 HZ.
+For each product, we calculate the mean, median, peak, root mean square, peak factor, form factor and so on. We also separate the data by the process itself. 
+For the turning project, original May data consists of 11962005 rows. Original June data consists of 116119892 rows. Original July data consists of 134806335 rows. For each row, we have the time stamp and the vibration (accelerations) of x, y, z-axis. It is 2000 HZ. For each product, we stored data around 6800 rows. We also remove the outliers corresponding to much more than or less than 6800 rows.
+ 
+
+ 
+ 
+Implementation
+ 
+[Fig] The scatterplot, the density plot and histogram for four different variables in the tension sensor
+From one product, we can explore the tension and voltage relationship. We can see from this scatterplot more clearly: when the voltage is low, the corresponding voltage is relatively low. Voltage left and right are linear. Tension left and right are also very close to linear. Voltage are tri-modal while the tension is more normal distributed.
+
+Refinement
+In statistics, a moving average (rolling average or running average) is a calculation to analyze data points by creating a series of averages of different subsets of the full dataset. It will make the trend more smooth. It is a common way in the time-series analysis to get rid of the white noise.
+ 
+[Fig] The original product cycle data for the tension problem.
+ 
+[Fig] The moving average of product cycle data for the tension problem.
+Original data: Tension = 1.57 + 69.86 * Voltage
+Moving average data: Tension = 1.34 + 72.28 * Voltage
+The model is significant better in the moving average data.The correlation increases from 0.64 to 0.82. We can also confirm this point by the OLS output.
+ 
+[Fig] The OLS regression output for the tension dataset
+Results
+Model evaluation and validation
+  
+[Fig] The correlation between four different variables in the tension dataset
+
+ 
+[Fig] The features’ change in the turning dataset in May
+ 
+[Fig] The features’ change in the turning dataset in July
+From the model, we can capture the trends through different variables.
+Justification
+The exploratory plots are similar when we analyze the data before/after change. The model is about the voltage left and voltage right. The differences between the left and rightVoltage is almost certain across different time. 
+Voltage left = 1.15*voltage right
+Voltage left = 1.13*voltage right
+We slightly adjust the equipment to get less variance between left and right.
+
+
+Conclusion
+Reflection
+Increase the manufacturing efficiency by monitoring machines, processes and environmental conditions. The turning sensor is a compact multi-sensor device for harsh environments. Machine condition tracking enables predictive and remote maintenance to save costs. With sensors, production yields can be optimized via live process monitoring. Due to its motion and environmental sensing abilities, the sensors’ big data analysis is ideally suited for I4.0 applications.
+ 
+Improvement
+We are able to draw a life curve for the turning tools. We also adjust the machine according to our big data analysis results.
+ 
