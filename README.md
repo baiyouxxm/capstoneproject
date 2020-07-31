@@ -11,3 +11,4 @@ Tension_process: The Jupyter notebooks related with the tension process. It cons
 
 Turning_process:  The Jupyter notebooks related with the turning process. It consists of three notebooks and other html files. Each notebook is data from the corresponding months. It also includes the html files of several days by Echart.
 
+Write_up: The overall write up about the project.
